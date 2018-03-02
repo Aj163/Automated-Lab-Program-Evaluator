@@ -19,10 +19,10 @@ This software reqires the following pre-installed softwares and well as environm
     3.  STUDENT
   * The "LOGIN" database must have the following tables with their Descriptions to match that shown on the image,
     1.  ADMIN<br />
-    ![picture alt](https://github.com/hlpr98/Automated-Lab-Program-Evaluator/blob/master/Diagrams/ADMIN.png "Table ADMIN")<br />
+    ![picture alt](https://github.com/Aj163/Automated-Lab-Program-Evaluator/blob/master/Diagrams/ADMIN.png "Table ADMIN")<br />
     2.  TEACHER<br />
-    ![picture alt](https://github.com/hlpr98/Automated-Lab-Program-Evaluator/blob/master/Diagrams/TEACHER.png "Table TEACHER")<br />
+    ![picture alt](https://github.com/Aj163/Automated-Lab-Program-Evaluator/blob/master/Diagrams/TEACHER.png "Table TEACHER")<br />
     3.  STUDENT<br />
-    ![picture alt](https://github.com/hlpr98/Automated-Lab-Program-Evaluator/blob/master/Diagrams/STUDENT.png "Table STUDENT")
+    ![picture alt](https://github.com/Aj163/Automated-Lab-Program-Evaluator/blob/master/Diagrams/STUDENT.png "Table STUDENT")
     
    
