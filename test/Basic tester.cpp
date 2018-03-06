@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <fstream>
 
-#include "MySQL_Client.h"
+#include "../src/MySQL_Client.h"
 
 int main(){
 
@@ -74,7 +74,7 @@ int main(){
 		string str = student.getSubmissionLogs(2);
 		cout<<endl<<str<<endl;
 		
-		str = student.getSubmissionLogs(user);
+		str = student.getSubmissionLogs();
 		
 		cout<<endl<<str<<endl;
 		ofstream out;

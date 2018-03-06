@@ -1,130 +1,93 @@
-#ifndef __MySQLClient__
-#define __MySQLClient__
+//sudo g++ -Wall -I/usr/include/cppconn MySQL_Client.h -L/usr/lib -lmysqlcppconn -std=c++11
+//sudo apt-get install libmysqlcppconn-dev
+
+MySQLInteract::MySQLInteract(string host, string port, string user, string pwd, string db)
+{
+	HOST = host;
+	USER_NAME = user;
+	PASSWORD = pwd;
+	DATABASE = db;
+	PORT = port;
+			
+	PORT = "3306"; //always same. Change if required.
+
+	string hostInfo = "tcp://" + HOST + ":" + PORT;
+	
 
 
-/*
-*	Class that will bw used to communicate with
-*	MySQL server
-*/
-
-//Basic libraries
-#include <bits/stdc++.h>
-#include <stdexcept>
-#include <ctime>
-
-//Libraries of Connetion/C++
-#include "mysql_connection.h"
-#include <boost/scoped_ptr.hpp>
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-#include <cppconn/prepared_statement.h>
+	//creating connection.
+	cout<<"Creating connection to server......."<<endl;
+	driver = get_driver_instance();
+	con = driver->connect(hostInfo,USER_NAME,PASSWORD);
 
 
-using namespace std;
-
-class MySQLInteract{
-private:
-	string HOST, USER_NAME, PASSWORD, DATABASE, TABLE, PORT;
-	string USER;
-
-public:
-	static const int IS_ADMIN; 	  //USE THIS if type of user is ADMIN
-	static const int IS_TEACHER;  //USE THIS if type of user is TEACHER
-	static const int IS_STUDENT;  //USE THIS if type of user is STUDENT
-	sql::Driver *driver;
-	sql::Connection *con;
-
-	MySQLInteract(string host, string port, string user, string pwd, string db){
-		HOST = host;
-		USER_NAME = user;
-		PASSWORD = pwd;
-		DATABASE = db;
-		PORT = port;
-				
-		PORT = "3306"; //always same. Change if required.
-
-		string hostInfo = "tcp://" + HOST + ":" + PORT;
-		
-
-
-		//creating connection.
-		cout<<"Creating connection to server......."<<endl;
-		driver = get_driver_instance();
-		con = driver->connect(hostInfo,USER_NAME,PASSWORD);
-
-
-		// if(con->isValid()){
-		// 	cout<<"Connetction to server " + HOST + " was successfully created"<<endl;
-		// }
-		// else{
-		// 	cout<<"Connetction to server " + HOST + " could not be created"<<endl;
-		// 	cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
-		// 	exit(1);
-		// }
-
-		con->setSchema(DATABASE);
-
+	if(con->isValid()){
+		cout<<"Connetction to server " + HOST + " was successfully created"<<endl;
+	}
+	else{
+		cout<<"Connetction to server " + HOST + " could not be created"<<endl;
+		cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
+		exit(1);
 	}
 
-	
-	MySQLInteract(const MySQLInteract &connector, string type){
-		this->HOST = connector.getHost();
-		this->USER_NAME = connector.getUserName();
-		this->PASSWORD = connector.getPassword();
-		this->DATABASE = type;
-		this->PORT = connector.getPort();
+	con->setSchema(DATABASE);
+}
+		
+MySQLInteract::MySQLInteract(const MySQLInteract &connector, string type)
+{
+	this->HOST = connector.getHost();
+	this->USER_NAME = connector.getUserName();
+	this->PASSWORD = connector.getPassword();
+	this->DATABASE = type;
+	this->PORT = connector.getPort();
 
-		this->con = connector.con;
-		int maxAttempt = 20;
-		// while(!this->con->isValid() && maxAttempt-->0){
-		// 	this->con->reconnect();
-		// }	
-		if(maxAttempt==0){
-			cout<<"Connetction to server " + HOST + " could not be created"<<endl;
-			cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
-			exit(1);
+	this->con = connector.con;
+	int maxAttempt = 20;
+	while(!this->con->isValid() && maxAttempt-->0){
+		this->con->reconnect();
+	}	
+	if(maxAttempt==0){
+		cout<<"Connetction to server " + HOST + " could not be created"<<endl;
+		cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
+		exit(1);
+	}
+
+	con->setSchema(DATABASE);
+}
+
+
+		bool setUser(string user_name){
+			USER = user_name;
+			return true;
 		}
 
-		con->setSchema(DATABASE);
+		string getUser(){
+			return USER;
+		}
 
+		string getHost() const{
+			return HOST;
+		}
 
-	}
+		string getPassword() const{
+			return PASSWORD;
+		}
 
+		string getPort() const{
+			return PORT;
+		}
 
-	bool setUser(string user_name){
-		USER = user_name;
-		return true;
-	}
-
-	string getUser(){
-		return USER;
-	}
-
-	string getHost() const{
-		return HOST;
-	}
-
-	string getPassword() const{
-		return PASSWORD;
-	}
-
-	string getPort() const{
-		return PORT;
-	}
-
-	string getUserName() const{
-		return USER_NAME;
-	}
+		string getUserName() const{
+			return USER_NAME;
+		}
 
 
 
-	~MySQLInteract(){
-		// cout<<"~MySQLInteract"<<endl;
-		// if(con!=NULL)
-		// 	delete con;
-	}
+		~MySQLInteract(){
+			// cout<<"~MySQLInteract"<<endl;
+			// if(con!=NULL)
+			// 	delete con;
+		}
 };
 
 
