@@ -323,28 +323,45 @@ bool Teacher::createTeacher(string user_name){
 
 int Teacher::getNoOfQuestions(){
 	
-	int flag = 0;
+	// int flag = 0;
 
-	pstmt = con->prepareStatement("SELECT MAX(Question) AS noOfQues FROM " + getUser());
+	// pstmt = con->prepareStatement("SELECT MAX(Question) AS noOfQues FROM " + getUser());
 
+	// res = pstmt->executeQuery();
+
+	// int toReturn;
+	// while(res->next()){
+	// 	toReturn = res->getInt("noOfQues");
+	// 	flag = 1;
+	// }
+
+	pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
 	res = pstmt->executeQuery();
-
-	int toReturn;
+	int cnt = 0;
 	while(res->next()){
-		toReturn = res->getInt("noOfQues");
-		flag = 1;
+		cnt++;
 	}
-
 	delete pstmt;
 	delete res;
 
-	return (flag == 1)? toReturn : 0;
+	return cnt;
 
 }
 
 
 
 string Teacher::getFile(int quesNo, int type){
+
+	pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
+	res = pstmt->executeQuery();
+	int cnt = 0,realQuesNo = -1;
+	while(cnt<quesNo && res->next()){
+		realQuesNo = res->getInt("Question");
+		cnt++;
+	}
+
+	if(quesNo != cnt)
+		return NULL;
 	
 	string column;
 	switch(type){
@@ -360,7 +377,7 @@ string Teacher::getFile(int quesNo, int type){
 	}
 
 	pstmt = con->prepareStatement("SELECT " + column + " FROM " + getUser() + " WHERE Question = ?");
-	pstmt->setInt(1,quesNo);
+	pstmt->setInt(1,realQuesNo);
 	res = pstmt->executeQuery();
 
 	while(res->next()){
@@ -438,6 +455,18 @@ int Teacher::getMarksPerTest(int quesNo){
 
 	return (flag == 1)? toReturn : 0;
 
+}
+
+bool Teacher::questionExists(int quesNo){
+	pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
+	res = pstmt->executeQuery();
+
+	while(res->next()){
+		if(quesNo == res->getInt("Question")){
+			return true;
+		}
+	}
+	return false;
 }
 
 bool Teacher::deleteQuestion(int quesNo){
