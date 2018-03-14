@@ -1,6 +1,9 @@
 # Automated-Lab-Program-Evaluator
 Software Engineering Project
 
+### Compile and Run
+```sudo g++ submit.cpp -Wall -I/usr/include/cppconn MySQL_Client.h -L/usr/lib -lmysqlcppconn -std=c++11```
+
 ### Prerequisites
 This software reqires the following pre-installed softwares and well as environment setup.
 
