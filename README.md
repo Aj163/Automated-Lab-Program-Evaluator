@@ -15,12 +15,18 @@ This software reqires the following pre-installed softwares and well as environm
 ```$ sudo apt-get install mysql-server-5.7```
 - The MySQL server must be set-up to contain the following databases,<br/>
 ```$ mysql -h 127.0.0.1 -P 3306 -u root -p```
-	1. LOGIN<br/>
-    ```create database LOGIN;```
-	2. TEACHER<br/>
-    ```create database TEACHER;```
-	3. STUDENT<br/>
-    ```create database STUDENT;```
+	1. LOGIN
+	```MySQL
+	create database LOGIN;
+	```
+	2. TEACHER
+	```MySQL
+	create database TEACHER;
+	```
+	3. STUDENT
+	```MySQL
+	create database STUDENT;
+	```
 - The "LOGIN" database must have the following tables with their Descriptions to match that shown on the image,<br />
 ```$ use LOGIN;```
 
