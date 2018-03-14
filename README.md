@@ -11,7 +11,7 @@ This software reqires the following pre-installed softwares and well as environm
 1. GNU g++ comiler -version 5.0 and above.
 2. GNU gcc compiler -version 5.0 and above.
 3. MySQL server -distribution 5.6 and above.
-4. MySQL Connector/C++ version 5.6 and above
+4. MySQL Connector/C++ version 5.6 and above<br/>
 	```$ sudo apt-get install libmysqlcppconn-dev```
 
 #### Prerequisite environment setup.
