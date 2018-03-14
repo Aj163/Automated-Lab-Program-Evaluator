@@ -362,6 +362,8 @@ public:
 	*
 	*/
 
+	bool questionExists(int quesNo);
+
 
 	bool deleteQuestion(int quesNo);
 	
