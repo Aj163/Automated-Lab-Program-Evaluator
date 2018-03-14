@@ -12,17 +12,47 @@ This software reqires the following pre-installed softwares and well as environm
  #### Prerequisite environment setup.
  
  
-  * The MySQL server must be preinstalled ont he server side.
+  * The MySQL server must be preinstalled on the server side.
+    ```$ sudo apt-get install mysql-server-5.7```
   * The MySQL server must be set-up to contain the following databases,
+    ```$ mysql -h 127.0.0.1 -P 3306 -u root -p```
     1.  LOGIN
+        ```create database LOGIN;```
     2.  TEACHER
+        ```create database TEACHER;```
     3.  STUDENT
+        ```create database STUDENT;```
   * The "LOGIN" database must have the following tables with their Descriptions to match that shown on the image,
+    ```$ use LOGIN;```
     1.  ADMIN<br />
+        ```
+        create table ADMIN(
+            ID int not null auto_increment,
+            username longtext,
+            password longtext,
+            primary key(ID)
+        );
+        ```
     ![picture alt](https://github.com/Aj163/Automated-Lab-Program-Evaluator/blob/master/Diagrams/ADMIN.png "Table ADMIN")<br />
     2.  TEACHER<br />
+        ```
+        create table TEACHER(
+            ID int not null auto_increment,
+            username longtext,
+            password longtext,
+            primary key(ID)
+        );
+        ```
     ![picture alt](https://github.com/Aj163/Automated-Lab-Program-Evaluator/blob/master/Diagrams/TEACHER.png "Table TEACHER")<br />
     3.  STUDENT<br />
+        ```
+        create table STUDENT(
+            ID int not null auto_increment,
+            username longtext,
+            password longtext,
+            primary key(ID)
+        );
+        ```
     ![picture alt](https://github.com/Aj163/Automated-Lab-Program-Evaluator/blob/master/Diagrams/STUDENT.png "Table STUDENT")
     
    
