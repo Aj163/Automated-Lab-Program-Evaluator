@@ -2,7 +2,7 @@
 Software Engineering Project
 
 ### Compile and Run
-```sudo g++ submit.cpp -Wall -I/usr/include/cppconn MySQL_Client.h -L/usr/lib -lmysqlcppconn -std=c++11```
+```sudo g++ filename.cpp -Wall -I/usr/include/cppconn -L/usr/lib -lmysqlcppconn -std=c++11```
 
 ### Prerequisites
 This software reqires the following pre-installed softwares and well as environment setup.
