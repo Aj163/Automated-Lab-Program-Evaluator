@@ -237,5 +237,5 @@ void submit(string teacherID, const MySQLInteract& connector)
 	// Files to be deleted
 	system("rm exec.out");
 	system("rm output.txt");
-	//system("rm -r testCases");
+	system("rm -r testCases");
 }
