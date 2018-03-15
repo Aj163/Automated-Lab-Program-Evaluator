@@ -9,13 +9,6 @@ using namespace std;
 #define MAXTIME 1000000
 	//1 second
 
-/*
-string x = "16CO104";
-MySQLInteract connector("127.0.0.1", "3306", "root", "root", "LOGIN");
-Teacher teacher(x,connector);
-submit(x, connector);
-*/
-
 pid_t pid=-1;
 
 bool compareFiles(const char file1[], const char file2[])
@@ -59,7 +52,11 @@ int executeCode(const char runCommand[])
 	pid = fork();
 	int ret=0;
 	if(pid==0)
+	{
 		ret = system(runCommand);
+		//wait(NULL);
+		//exit(0);
+	}
 	else
 	{
 		signal(SIGCHLD,handler);
@@ -139,9 +136,8 @@ int makeTestCaseFolder(string testInput, string testOutput)
 	return numberOfTestCases;
 }
 
-void submit(string teacherID, const MySQLInteract& connector)
+void submit(Teacher teacher, Student student)
 {
-	Teacher tid(teacherID, connector);
 	char user_filepath[500];
 	int results[maxNumberOfTestCases];
 	int quesNo;
@@ -150,7 +146,7 @@ void submit(string teacherID, const MySQLInteract& connector)
 	printf("Enter question number : ");
 	cin>>quesNo;
 
-	if(tid.getNoOfQuestions() < quesNo || quesNo<=0)
+	if(teacher.getNoOfQuestions() < quesNo || quesNo<=0)
 	{
 		printf("Invalid Question Number\n");
 		return;
@@ -158,8 +154,8 @@ void submit(string teacherID, const MySQLInteract& connector)
 
 	//GET TEST CASES, and number of test cases
 	//Put into folder
-	string testInput = tid.getFile(quesNo, Teacher::TEST_IN_FILE);
-	string testOutput = tid.getFile(quesNo, Teacher::TEST_OUT_FILE);
+	string testInput = teacher.getFile(quesNo, Teacher::TEST_IN_FILE);
+	string testOutput = teacher.getFile(quesNo, Teacher::TEST_OUT_FILE);
 	int numberOfTestCases = makeTestCaseFolder(testInput, testOutput);
 
 	printf("Enter relative path to file to submit : ");
@@ -171,6 +167,7 @@ void submit(string teacherID, const MySQLInteract& connector)
 	if(system(compile))
 	{
 		printf("\n== Compilation Error ==\n");
+		system("rm -r testCases");
 		return;
 	}
 
@@ -180,6 +177,8 @@ void submit(string teacherID, const MySQLInteract& connector)
 		//2 - TLE
 		//3 - RE
 
+	string resultString;
+	int finalResult = 4;
 
 	system("clear");
 	for(int i=0; i<numberOfTestCases; i++)
@@ -204,7 +203,7 @@ void submit(string teacherID, const MySQLInteract& connector)
 
 		int codeResult = executeCode(runCommand);
 		if(pid == 0)
-			return;
+			exit(0);
 		if(codeResult == 3){
 			printf("Runtime Error\n\n");
 			results[i] = 3;
@@ -228,11 +227,31 @@ void submit(string teacherID, const MySQLInteract& connector)
 		else{
 			results[i] = 0;
 			printf("Correct Answer\n\n");
+			score++;
 		}
 
+		finalResult = max(finalResult, results[i]);
 	}
 
 	score = score*1.0/numberOfTestCases*100;
+	//TODO : Print result
+
+	switch(finalResult)
+	{
+		case 0:
+			resultString = "AC";
+			break;
+		case 1:
+			resultString = "WA";
+			break;
+		case 2:
+			resultString = "TLE";
+			break;
+		case 3:
+			resultString = "RE";
+			break;
+	}
+	student.storeFileWithResult(quesNo, user_filepath, "C", resultString, score);
 
 	// Files to be deleted
 	system("rm exec.out");
