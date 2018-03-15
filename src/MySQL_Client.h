@@ -49,7 +49,7 @@ public:
 
 
 		//creating connection.
-		cout<<"Creating connection to server......."<<endl;
+		//cout<<"Creating connection to server......."<<endl;
 		driver = get_driver_instance();
 		con = driver->connect(hostInfo,USER_NAME,PASSWORD);
 
