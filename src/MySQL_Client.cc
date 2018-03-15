@@ -43,6 +43,7 @@ MySQLInteract::~MySQLInteract(){
  
 
 bool Admin::isUserNamePresent(string user_name,int type){
+	con->setSchema("LOGIN");
 	
 	string table;
 	switch(type){
@@ -67,8 +68,8 @@ bool Admin::isUserNamePresent(string user_name,int type){
 }
 
 
-
 bool Admin::login(string user_name, string password, int type){
+	con->setSchema("LOGIN");
 
 	string table;
 	switch(type){
@@ -106,6 +107,7 @@ bool Admin::login(string user_name, string password, int type){
 
 
 bool Admin::createNewUser(string user_name, string password, int type){
+	con->setSchema("LOGIN");
 
 	string table;
 	switch(type){
@@ -134,7 +136,42 @@ bool Admin::createNewUser(string user_name, string password, int type){
 }
 
 
+bool Admin::removeUser(string user_name, int type){
+	con->setSchema("LOGIN");
+
+	string table;
+	switch(type){
+		case 0:
+			table = "ADMIN";
+			break;
+		case 1:
+			table = "TEACHER";
+			break;
+		case 2:
+			table = "STUDENT";
+			break;
+	}
+
+	if(isUserNamePresent(user_name,type)){
+		pstmt = con->prepareStatement("DELETE FROM " + table + " WHERE username = ?");
+		pstmt->setString(1,user_name);
+
+		pstmt->executeUpdate();
+
+		con->setSchema(table);
+		pstmt = con->prepareStatement("DROP TABLE " + user_name);
+		pstmt->executeUpdate();
+
+		con->setSchema("LOGIN");
+		return true;
+	}
+
+	return false;
+}
+
+
 bool Admin::isUserNameValid(string user_name, int type){
+	con->setSchema("LOGIN");
 	
 
 	string table;
@@ -180,6 +217,7 @@ Admin::~Admin(){
 
 
 bool Student::createStudent(string user_name){
+	con->setSchema("STUDENT");
 
 	pstmt = con->prepareStatement("CREATE TABLE " + user_name + " (ID INT NOT NULL AUTO_INCREMENT,Question INT NOT NULL, DateTime TEXT, Language varchar(255), File LONGTEXT, Result varchar(255), Marks INT, PRIMARY KEY(ID))");
 	pstmt->executeUpdate();
@@ -193,6 +231,7 @@ bool Student::createStudent(string user_name){
 
 
 bool Student::storeFileWithResult(int quesNo, string pathToFile, string language, string result, int marks){
+	con->setSchema("STUDENT");
 
 	pstmt = con->prepareStatement("INSERT INTO " + getUser() + " (Question,DateTime,Language,File,Result,Marks) VALUES  (?,?,?,?,?,?)");
 	
@@ -229,6 +268,7 @@ bool Student::storeFileWithResult(int quesNo, string pathToFile, string language
 
 
 string Student::getFile(int quesNo, int submissionNo){
+	con->setSchema("STUDENT");
 
 	pstmt = con->prepareStatement("SELECT File FROM " + getUser() + " WHERE Question = ? AND ID = ?");
 
@@ -254,6 +294,7 @@ string Student::getFile(int quesNo, int submissionNo){
 
 
 string Student::getSubmissionLogs(int quesNo){
+	con->setSchema("STUDENT");
 
 	int flag = 0;
 
@@ -278,6 +319,7 @@ string Student::getSubmissionLogs(int quesNo){
 
 
 string Student::getSubmissionLogs(){
+	con->setSchema("STUDENT");
 
 	int flag = 0;
 
@@ -310,8 +352,9 @@ Student::~Student(){
 // When DATABASE == TEACHER	
 
 bool Teacher::createTeacher(string user_name){
+	con->setSchema("TEACHER");
 
-	pstmt = con->prepareStatement("CREATE TABLE " + user_name + " (Question INT NOT NULL AUTO_INCREMENT,Question_File LONGTEXT,Test_In_File LONGTEXT,Test_Out_File LONGTEXT,Marks_For_Each_Test INT, PRIMARY KEY(Question))");
+	pstmt = con->prepareStatement("CREATE TABLE " + user_name + " (ID INT NOT NULL AUTO_INCREMENT,Question INT NOT NULL,Question_File LONGTEXT,Test_In_File LONGTEXT,Test_Out_File LONGTEXT,Marks_For_Each_Test INT, PRIMARY KEY(ID))");
 	pstmt->executeUpdate();
 
 	delete pstmt;
@@ -322,29 +365,32 @@ bool Teacher::createTeacher(string user_name){
 
 
 int Teacher::getNoOfQuestions(){
+	con->setSchema("TEACHER");
 	
-	// int flag = 0;
+	int flag = 0;
 
-	// pstmt = con->prepareStatement("SELECT MAX(Question) AS noOfQues FROM " + getUser());
+	pstmt = con->prepareStatement("SELECT MAX(Question) AS noOfQues FROM " + getUser());
 
-	// res = pstmt->executeQuery();
-
-	// int toReturn;
-	// while(res->next()){
-	// 	toReturn = res->getInt("noOfQues");
-	// 	flag = 1;
-	// }
-
-	pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
 	res = pstmt->executeQuery();
-	int cnt = 0;
+
+	int toReturn;
 	while(res->next()){
-		cnt++;
+		toReturn = res->getInt("noOfQues");
+		flag = 1;
 	}
+
+	// pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
+	// res = pstmt->executeQuery();
+	// int cnt = 0;
+	// while(res->next()){
+	// 	cnt++;
+	// }
 	delete pstmt;
 	delete res;
 
-	return cnt;
+
+
+	return (flag == 1) ? toReturn : 0;
 
 }
 
@@ -352,16 +398,17 @@ int Teacher::getNoOfQuestions(){
 
 string Teacher::getFile(int quesNo, int type){
 
-	pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
-	res = pstmt->executeQuery();
-	int cnt = 0,realQuesNo = -1;
-	while(cnt<quesNo && res->next()){
-		realQuesNo = res->getInt("Question");
-		cnt++;
-	}
+	// pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
+	// res = pstmt->executeQuery();
+	// int cnt = 0,realQuesNo = -1;
+	// while(cnt<quesNo && res->next()){
+	// 	realQuesNo = res->getInt("Question");
+	// 	cnt++;
+	// }
 
-	if(quesNo != cnt)
-		return NULL;
+	// if(quesNo != cnt)
+	// 	return NULL;
+	con->setSchema("TEACHER");
 	
 	string column;
 	switch(type){
@@ -377,7 +424,7 @@ string Teacher::getFile(int quesNo, int type){
 	}
 
 	pstmt = con->prepareStatement("SELECT " + column + " FROM " + getUser() + " WHERE Question = ?");
-	pstmt->setInt(1,realQuesNo);
+	pstmt->setInt(1,quesNo);
 	res = pstmt->executeQuery();
 
 	while(res->next()){
@@ -398,32 +445,42 @@ string Teacher::getFile(int quesNo, int type){
 
 
 bool Teacher::addQuestion(string pathToQuestionFile, string pathToInputTest, string pathToOutputTest, int marksPerTest){
+	con->setSchema("TEACHER");
+
+	pstmt = con->prepareStatement("SELECT MAX(Question) AS noOfQues FROM " + getUser());
+	res = pstmt->executeQuery();
+	int quesNo = 0;
+	while(res->next()){
+		quesNo = res->getInt("noOfQues");
+	}
+
+	quesNo++;
 	
-	pstmt = con->prepareStatement("INSERT INTO " + getUser() + " (Question_File, Test_In_File, Test_Out_File, Marks_For_Each_Test) VALUES  (?,?,?,?)");
+	pstmt = con->prepareStatement("INSERT INTO " + getUser() + " (Question,Question_File, Test_In_File, Test_Out_File, Marks_For_Each_Test) VALUES  (?,?,?,?,?)");
 	
-	
+	pstmt->setInt(1,quesNo);
 
 	//Copying the file into a string;
 	ifstream ifs1 (pathToQuestionFile);
 	std::string content1( (std::istreambuf_iterator<char>(ifs1) ),(std::istreambuf_iterator<char>() ) );
 
-	pstmt->setString(1,content1);
+	pstmt->setString(2,content1);
 	
 	
 	//Copying the file into a string;
 	ifstream ifs2 (pathToInputTest);
 	std::string content2( (std::istreambuf_iterator<char>(ifs2) ),(std::istreambuf_iterator<char>() ) );
 
-	pstmt->setString(2,content2);
+	pstmt->setString(3,content2);
 	
 	
 	//Copying the file into a string;
 	ifstream ifs3 (pathToOutputTest);
 	std::string content3( (std::istreambuf_iterator<char>(ifs3) ),(std::istreambuf_iterator<char>() ) );
 
-	pstmt->setString(3,content3);
+	pstmt->setString(4,content3);
 
-	pstmt->setInt(4,marksPerTest);
+	pstmt->setInt(5,marksPerTest);
 
 	pstmt->executeUpdate();
 
@@ -436,6 +493,7 @@ bool Teacher::addQuestion(string pathToQuestionFile, string pathToInputTest, str
 
 
 int Teacher::getMarksPerTest(int quesNo){
+	con->setSchema("TEACHER");
 
 	int flag = 0;
 
@@ -457,27 +515,148 @@ int Teacher::getMarksPerTest(int quesNo){
 
 }
 
+
+
 bool Teacher::questionExists(int quesNo){
+	con->setSchema("TEACHER");
+
 	pstmt = con->prepareStatement("SELECT Question FROM " + getUser());
 	res = pstmt->executeQuery();
 
 	while(res->next()){
 		if(quesNo == res->getInt("Question")){
+
+			delete res;
+			delete pstmt;
 			return true;
 		}
 	}
+
+
+	delete res;
+	delete pstmt;
 	return false;
 }
 
+
+
 bool Teacher::deleteQuestion(int quesNo){
+	con->setSchema("TEACHER");
 
 	pstmt = con->prepareStatement("DELETE FROM " + getUser() + " WHERE Question = ?");
 	pstmt->setInt(1,quesNo);
 
 	pstmt->executeUpdate();
+
+	pstmt = con->prepareStatement("SELECT ID FROM " + getUser() + " WHERE Question > ?");
+	pstmt->setInt(1,quesNo);
+
+	res = pstmt->executeQuery();
+
+	int realNo = quesNo;
+
+	while(res->next()){
+		pstmt = con->prepareStatement("UPDATE " + getUser() + " SET Question = ? WHERE ID = ?");
+		pstmt->setInt(1,realNo);
+		pstmt->setInt(2,res->getInt("ID"));
+		pstmt->executeUpdate();
+
+		realNo++;
+	}
+
+	delete res;
+	delete pstmt;
 	return true;
 }
 	
+string Teacher::getResults(string commonCharacters){
+	con->setSchema("TEACHER");
+
+	int noOfQues = getNoOfQuestions();
+	string results = "Name of Student";
+
+	for(int i = 1;i<=noOfQues;i++){
+		results = results + ",Marks in Question ";
+		int t = i;
+		while(t>0){
+			char c = t%10 + '0';
+			results = results + c;
+			t = t/10;
+		}
+	}
+
+	results = results + ",Total score" + '\n';
+
+
+
+	pstmt = con->prepareStatement("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \"STUDENT\" AND TABLE_NAME LIKE \"%" + commonCharacters + "%\"");
+	res = pstmt->executeQuery();
+
+	con->setSchema("STUDENT");
+
+	int flag = 0;
+	while(res->next()){
+		flag = 1;
+		string temp = res->getString("TABLE_NAME");
+		string table = temp;
+		temp = temp + ",";
+		int sum = 0;
+
+		for(int i = 1;i<=noOfQues;i++){
+			pstmt = con->prepareStatement("SELECT MAX(Marks) AS Result FROM " + table + " WHERE Question = ?");
+			pstmt->setInt(1,i);
+
+  			sql::ResultSet *tmp;
+  			tmp = pstmt->executeQuery();
+  	
+
+			int flag = 0;
+  			while(tmp->next()){
+  				int t = tmp->getInt("Result");
+  				sum = sum+t;
+  				string dum;
+  				while(t>0){
+  					flag = 1;
+  					char c = t%10 + '0';
+  					dum = dum+c;
+  					t = t/10;
+  				}		
+  				reverse(dum.begin(),dum.end());
+  				temp = temp + dum;
+  			}
+
+  			if(flag==0)
+  				temp = temp+'0';
+
+  			temp = temp + ",";
+  			delete tmp;
+		}
+
+		int flag = 0;
+		string dum;
+
+		while(sum>0){
+			flag = 1;
+			char c = sum%10 + '0';
+			dum = dum+c;
+			sum = sum/10;
+		}
+
+		reverse(dum.begin(),dum.end());
+		if(flag==0)
+			temp = temp+'0';
+		else
+			temp = temp+dum;
+
+		results = results + temp + '\n';
+  				
+	}
+
+	con->setSchema("TEACHER");
+	delete pstmt;
+
+	return (flag == 1) ? results : "";
+}
 
 
 Teacher::~Teacher(){

@@ -127,7 +127,7 @@ public:
 		setUser("ADMIN");
 	}
 
-
+	
 	/*
 	*	#TODO Checks if the USERNAME is Already taken or not.
 	*	@param
@@ -168,6 +168,8 @@ public:
 	*/
 
 	bool createNewUser(string user_name, string password, int type);
+	
+
 	/*
 	*	#TODO Checks if the USERNAME is valid or not.
 	*	@param
@@ -180,6 +182,21 @@ public:
 	*/
 
 	bool isUserNameValid(string user_name, int type);
+
+
+	/*
+	*	#TODO Checks if the USERNAME is Already taken or not.
+	*	@param
+	*		1.USERNAME to be checked 
+	*		2.TYPE of user
+	*	@return
+	*		true, if USERNAME already taken.
+	*		false, if not taken.
+	*
+	*/
+
+	bool removeUser(string user_name, int type);
+
 
 	~Admin();
 };
@@ -354,6 +371,20 @@ public:
 
 	
 	/*
+	*	#TODO Checks if a perticular question exists or not.
+	*	@param
+	*		1.QUESTION NO.
+	*	@return
+	*		true if Question is present.
+	*.		false otherwise
+	*
+	*/
+
+	bool questionExists(int quesNo);
+
+
+	
+	/*
 	*	#TODO Deletes a perticular question.
 	*	@param
 	*		1.QUESTION NO.
@@ -362,11 +393,23 @@ public:
 	*
 	*/
 
-	bool questionExists(int quesNo);
-
-
 	bool deleteQuestion(int quesNo);
 	
+
+
+	/*
+	*	#TODO Returns the results of all the students who attended the test as a string 
+	*	which can be directly written into a .csv or .odx or any other spreadheet file.
+	*	@param
+	*		1.A string which is common to all the usernames of the students who have attended the test.
+	*	@return
+	*		1. A string with the results, structured to be written directly into a .csv file, the format of the string would be,
+	*		Username, Marks in Question 1,Marks in Question 2, ........ , Total score 
+	*		2. An empty string if no student attended the test.
+	*
+	*/
+
+	string getResults(string commonCharacters);
 
 	~Teacher();
 };
