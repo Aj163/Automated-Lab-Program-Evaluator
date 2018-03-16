@@ -72,16 +72,15 @@ bool removeTeacher(string username, Admin admin){
 	return true;
 }
 
-int main()
+void ADMIN(MySQLInteract connector)
 {	
 	string username,password;
 	int choice;
 
-	MySQLInteract connector("127.0.0.1", "3306", "root", "root", "LOGIN");
 	Admin admin(connector);
 		
 	do{
-		system("clear");
+		clearSystem();
 		printf("\n\t1. Add Teacher\n\t2. Add Student\n\t3. Remove Teacher\n\t4. Remove Student\n\tx. Exit\n\tEnter your choice : ");
 		cin>>choice;
 		switch(choice){

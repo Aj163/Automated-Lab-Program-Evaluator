@@ -141,7 +141,7 @@ void submit(Teacher teacher, Student student)
 	char user_filepath[500];
 	int results[maxNumberOfTestCases];
 	int quesNo;
-	system("clear");
+	clearSystem();
 
 	printf("Enter question number : ");
 	cin>>quesNo;
@@ -180,7 +180,7 @@ void submit(Teacher teacher, Student student)
 	string resultString;
 	int finalResult = 0;
 
-	system("clear");
+	clearSystem();
 	for(int i=0; i<numberOfTestCases; i++)
 	{
 		char runCommand[] = "./exec.out < testCases/input";
@@ -207,11 +207,13 @@ void submit(Teacher teacher, Student student)
 		if(codeResult == 3){
 			printf("Runtime Error\n\n");
 			results[i] = 3;
+			finalResult = max(finalResult, results[i]);
 			continue;
 		}
 		else if(codeResult == 2){
 			printf("Time Limit Exceeded\n\n");
 			results[i] = 2;
+			finalResult = max(finalResult, results[i]);
 			continue;
 		}
 
@@ -252,6 +254,13 @@ void submit(Teacher teacher, Student student)
 			break;
 	}
 	student.storeFileWithResult(quesNo, user_filepath, "C", resultString, score);
+
+	printf("\n\nQuestion Number : %d\n", quesNo);
+	cout<<"Result : "<<resultString<<endl;
+	printf("Score : %d / 100\n", score);
+	printf("\n\nHit Enter to continue");
+	getchar();
+	getchar();
 
 	// Files to be deleted
 	system("rm exec.out");

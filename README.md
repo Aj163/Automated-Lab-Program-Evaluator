@@ -3,8 +3,8 @@ Software Engineering Project
 
 ### Compile and Run
 ```
-$ sudo g++ filename.cpp -Wall -I/usr/include/cppconn -L/usr/lib -lmysqlcppconn -std=c++11
-$ ./a.out
+$ sudo g++ src/ALPE.cpp -o ALPE -Wall -I/usr/include/cppconn -L/usr/lib -lmysqlcppconn -std=c++11
+$ ./ALPE
 ```
 
 ### Prerequisites

@@ -55,11 +55,11 @@ public:
 
 
 		if(con->isValid()){
-			cout<<"Connetction to server " + HOST + " was successfully created"<<endl;
+			//cout<<"Connetction to server " + HOST + " was successfully created"<<endl;
 		}
 		else{
-			cout<<"Connetction to server " + HOST + " could not be created"<<endl;
-			cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
+			//cout<<"Connetction to server " + HOST + " could not be created"<<endl;
+			//cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
 			exit(1);
 		}
 
@@ -82,8 +82,8 @@ public:
 			this->con->reconnect();
 		}	
 		if(maxAttempt==0){
-			cout<<"Connetction to server " + HOST + " could not be created"<<endl;
-			cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
+			//cout<<"Connetction to server " + HOST + " could not be created"<<endl;
+			//cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
 			exit(1);
 		}
 
@@ -418,6 +418,20 @@ public:
 const int Teacher::QUESTION_FILE = 0;
 const int Teacher::TEST_IN_FILE = 1;
 const int Teacher::TEST_OUT_FILE = 2;
+
+
+void clearSystem()
+{
+	system("clear");
+	printf("  ======================================\n");
+	printf("\t             __   __ ");
+	printf("\n\t  /\\   |    |  | |   ");
+	printf("\n\t /__\\  |    |__| |-- " );
+	printf("\n\t/    \\ |___ |    |__ ");
+	printf("\n\t            |        \n\n");
+	printf("  ======================================\n\n");
+}
+
 
 #include "MySQL_Client.cc"
 #endif

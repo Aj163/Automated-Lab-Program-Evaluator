@@ -287,7 +287,7 @@ string Student::getFile(int quesNo, int submissionNo){
 	delete res;
 	delete pstmt;
 
-	return NULL;
+	return "";
 
 }
 
@@ -313,7 +313,7 @@ string Student::getSubmissionLogs(int quesNo){
 	delete pstmt;
 	delete res;
 
-	return (flag == 1)? toReturn : NULL;
+	return (flag == 1)? toReturn : "";
 
 }
 
@@ -337,7 +337,7 @@ string Student::getSubmissionLogs(){
 	delete pstmt;
 	delete res;
 
-	return (flag == 1)? toReturn : NULL;
+	return (flag == 1)? toReturn : "";
 
 }
 
@@ -438,7 +438,7 @@ string Teacher::getFile(int quesNo, int type){
 	delete res;
 	delete pstmt;
 
-	return NULL;
+	return "";
 
 }
 
