@@ -28,6 +28,8 @@ void getSubmissionLogs(Student student)
 {
 	system("clear");
 	cout<<student.getSubmissionLogs();
+	getchar();
+	getchar();
 }
 
 void menu(Teacher teacher, Student student)

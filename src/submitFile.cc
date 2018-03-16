@@ -178,7 +178,7 @@ void submit(Teacher teacher, Student student)
 		//3 - RE
 
 	string resultString;
-	int finalResult = 4;
+	int finalResult = 0;
 
 	system("clear");
 	for(int i=0; i<numberOfTestCases; i++)
