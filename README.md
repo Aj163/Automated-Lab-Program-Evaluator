@@ -21,8 +21,27 @@ This software reqires the following pre-installed softwares and well as environm
 
 - The MySQL server must be preinstalled on the server side.<br/>
 ```$ sudo apt-get install mysql-server-5.7```
+
+- The MySQL server must be setup to provide access to sername ```ALPE``` and password ```root```.<br/>
+
+	```
+	$ mysql -h 127.0.0.1 -P 3306 -u root -p
+	```
+	In MySQL:
+	```MySQL
+	create user 'ALPE'@'localhost' identified by 'root';
+	grant all privileges on *.* to 'ALPE'@'localhost' with grant option;
+	create user 'ALPE'@'%' identified by 'root';
+	grant all privileges on *.* to 'ALPE'@'%' with grant option;
+	flush privileges;
+	exit;
+	```
+	```
+	$ sudo service mysql restart
+	```
+
 - The MySQL server must be set-up to contain the following databases,<br/>
-```$ mysql -h 127.0.0.1 -P 3306 -u root -p```
+	```$ mysql -h 127.0.0.1 -P 3306 -u root -p```
 	1. LOGIN
 	```MySQL
 	create database LOGIN;
