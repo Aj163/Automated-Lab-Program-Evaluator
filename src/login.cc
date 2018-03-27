@@ -60,7 +60,7 @@ void login(MySQLInteract connector)
 				continue;
 			}
 
-			cout<<"\n\tLog in Successfull\n";
+			cout<<"\n\tLog in Successfull";
 			printf("\n\tHit Enter to continue");
 			getchar();
 			getchar();

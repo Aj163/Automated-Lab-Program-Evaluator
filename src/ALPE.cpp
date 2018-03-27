@@ -2,6 +2,12 @@
 
 int main()
 {
-	MySQLInteract connector("127.0.0.1", "3306", "root", "root", "LOGIN");
+	string IPAddress;
+
+	clearSystem();
+	printf("\n\tEnter server IP Address : ");
+	cin>>IPAddress;
+
+	MySQLInteract connector(IPAddress, "3306", "ALPE", "root", "LOGIN");
 	login(connector);
 }

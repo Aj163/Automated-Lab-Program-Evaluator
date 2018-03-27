@@ -83,7 +83,7 @@ void menu(Teacher teacher, Student student)
 	{
 		clearSystem();
 		printf("\n\n\t1. View Question\n\t2. Submit Code\n\t3. View Submissions");
-		printf("\n\t4. View Submissions for a particular question\n\tx. Exit\n\n\tEnter your choice : ");
+		printf("\n\t4. View Submissions for a particular question\n\tx. Logout\n\n\tEnter your choice : ");
 		cin>>choice;
 
 		switch(choice)

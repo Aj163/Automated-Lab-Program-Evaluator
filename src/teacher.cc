@@ -169,7 +169,7 @@ void menu(Teacher teacher, Admin admin, MySQLInteract connector)
 	{
 		clearSystem();
 		printf("\n\n\t1. Upload Question\n\t2. Get Report\n\t3. View Submissions of a student");
-		printf("\n\t4. Delete Question\n\tx. Exit\n\n\tEnter your choice : ");
+		printf("\n\t4. Delete Question\n\tx. Logout\n\n\tEnter your choice : ");
 		cin>>choice;
 
 		switch(choice)

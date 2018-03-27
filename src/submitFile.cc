@@ -84,10 +84,11 @@ int makeTestCaseFolder(string testInput, string testOutput)
 	inputFile.close();
 	outputFile.close();
 
+
 	system("mkdir testCases");
 	ifstream inputTestCases("inputFile.txt"), outputTestCases("outputFile.txt");
 	string readLine;
-	char filename[20];
+	char filename[100];
 	int numberOfTestCases;
 
 	inputTestCases>>numberOfTestCases;
