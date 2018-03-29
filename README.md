@@ -22,7 +22,7 @@ This software reqires the following pre-installed softwares and well as environm
 - The MySQL server must be preinstalled on the server side.<br/>
 ```$ sudo apt-get install mysql-server-5.7```
 
-- The MySQL server must be setup to provide access to sername ```ALPE``` and password ```root```.<br/>
+- The MySQL server must be setup to provide access to username ```ALPE``` and password ```root```.<br/>
 
 	```
 	$ mysql -h 127.0.0.1 -P 3306 -u root -p

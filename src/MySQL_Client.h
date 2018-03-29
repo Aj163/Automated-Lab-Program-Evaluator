@@ -129,7 +129,7 @@ public:
 
 	
 	/*
-	*	#TODO Checks if the USERNAME is Already taken or not.
+	*	#Checks if the USERNAME is Already taken or not.
 	*	@param
 	*		1.USERNAME to be checked 
 	*		2.TYPE of user
@@ -143,7 +143,7 @@ public:
 
 
 	/*
-	*	#TODO Checks if the lgoin credentials are correct or not.
+	*	#Checks if the lgoin credentials are correct or not.
 	*	@param
 	*		1.USERNAME  
 	*		2.PASSWORD
@@ -157,7 +157,7 @@ public:
 	bool login(string user_name, string password, int type);
 
 	/*
-	*	#TODO Creates new account for the user.
+	*	#Creates new account for the user.
 	*	@param
 	*		1.NEW USERNAME  
 	*		2.NEW PASSWORD
@@ -171,7 +171,7 @@ public:
 	
 
 	/*
-	*	#TODO Checks if the USERNAME is valid or not.
+	*	#Checks if the USERNAME is valid or not.
 	*	@param
 	*		1.USERNAME to be checked 
 	*		2.TYPE of user
@@ -185,7 +185,7 @@ public:
 
 
 	/*
-	*	#TODO Checks if the USERNAME is Already taken or not.
+	*	#Checks if the USERNAME is Already taken or not.
 	*	@param
 	*		1.USERNAME to be checked 
 	*		2.TYPE of user
@@ -216,7 +216,7 @@ public:
 
 
 	/*
-	*	#TODO Creates a new TABLE with the USERNAME as its name.
+	*	#Creates a new TABLE with the USERNAME as its name.
 	*	@param
 	*		1.USERNAME
 	*	@return
@@ -228,7 +228,7 @@ public:
 
 
 	/*
-	*	#TODO Stores the contents of the file along with other info into the table.
+	*	#Stores the contents of the file along with other info into the table.
 	*	@param
 	*		1.QUESTION NO for which the given file corresponds to. 
 	*		2.PATH to the file
@@ -244,7 +244,7 @@ public:
 
 
 	/*
-	*	#TODO Returns the contents of the requested file.
+	*	#Returns the contents of the requested file.
 	*	@param
 	*		1.QUESTION NO for which the requested file was submitted.
 	*		2.SUBMISSION NO of the file.
@@ -257,7 +257,7 @@ public:
 	string getFile(int quesNo, int submissionNo);
 
 	/*
-	*	#TODO Returns the submission logs for a perticular question.
+	*	#Returns the submission logs for a perticular question.
 	*	@param
 	*		1.QUESTION NO.
 	*	@return
@@ -270,7 +270,7 @@ public:
 	string getSubmissionLogs(int quesNo);
 
 	/*
-	*	#TODO Returns the submission logs for the user.
+	*	#Returns the submission logs for the user.
 	*	@param
 	*		void
 	*	@return
@@ -303,7 +303,7 @@ public:
 
 
 	/*
-	*	#TODO Creates a new TABLE with the USERNAME as its name.
+	*	#Creates a new TABLE with the USERNAME as its name.
 	*	@param
 	*		1.USERNAME
 	*	@return
@@ -315,7 +315,7 @@ public:
 
 
 	/*
-	*	#TODO Returns the Number of questions added by the user.
+	*	#Returns the Number of questions added by the user.
 	*	@param
 	*		void.
 	*	@return
@@ -328,7 +328,7 @@ public:
 
 
 	/*
-	*	#TODO Returns the contents of the requested file.
+	*	#Returns the contents of the requested file.
 	*	@param
 	*		1.QUESTION NO for which the requested file was submitted.
 	*		2.TYPE of the file.
@@ -343,7 +343,7 @@ public:
 
 
 	/*
-	*	#TODO Stores the contents of the files along with other info into the table.
+	*	#Stores the contents of the files along with other info into the table.
 	*	@param
 	*		1.PATH to the FILE CONTAINING THE QUESTION 
 	*		2.PATH to the FILE CONTATING THE INPUT TEST CASES.
@@ -358,7 +358,7 @@ public:
 	bool addQuestion(string pathToQuestionFile, string pathToInputTest, string pathToOutputTest, int marksPerTest);
 
 	/*
-	*	#TODO Returns the Marks aloocted per test case for a perticular question.
+	*	#Returns the Marks aloocted per test case for a perticular question.
 	*	@param
 	*		1.QUESTION NO.
 	*	@return
@@ -371,7 +371,7 @@ public:
 
 	
 	/*
-	*	#TODO Checks if a perticular question exists or not.
+	*	#Checks if a perticular question exists or not.
 	*	@param
 	*		1.QUESTION NO.
 	*	@return
@@ -385,7 +385,7 @@ public:
 
 	
 	/*
-	*	#TODO Deletes a perticular question.
+	*	#Deletes a perticular question.
 	*	@param
 	*		1.QUESTION NO.
 	*	@return
@@ -398,7 +398,7 @@ public:
 
 
 	/*
-	*	#TODO Returns the results of all the students who attended the test as a string 
+	*	#Returns the results of all the students who attended the test as a string 
 	*	which can be directly written into a .csv or .odx or any other spreadheet file.
 	*	@param
 	*		1.A string which is common to all the usernames of the students who have attended the test.
