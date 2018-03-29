@@ -54,14 +54,14 @@ public:
 		con = driver->connect(hostInfo,USER_NAME,PASSWORD);
 
 
-		if(con->isValid()){
-			//cout<<"Connetction to server " + HOST + " was successfully created"<<endl;
-		}
-		else{
-			//cout<<"Connetction to server " + HOST + " could not be created"<<endl;
-			//cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
-			exit(1);
-		}
+		// if(con->isValid()){
+		// 	//cout<<"Connetction to server " + HOST + " was successfully created"<<endl;
+		// }
+		// else{
+		// 	//cout<<"Connetction to server " + HOST + " could not be created"<<endl;
+		// 	//cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
+		// 	exit(1);
+		// }
 
 
 		con->setSchema(DATABASE);
@@ -77,15 +77,15 @@ public:
 		this->PORT = connector.getPort();
 
 		this->con = connector.con;
-		int maxAttempt = 20;
-		while(!this->con->isValid() && maxAttempt-->0){
-			this->con->reconnect();
-		}	
-		if(maxAttempt==0){
-			//cout<<"Connetction to server " + HOST + " could not be created"<<endl;
-			//cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
-			exit(1);
-		}
+		//int maxAttempt = 20;
+		// while(!this->con->isValid() && maxAttempt-->0){
+		// 	this->con->reconnect();
+		// }	
+		// if(maxAttempt==0){
+		// 	//cout<<"Connetction to server " + HOST + " could not be created"<<endl;
+		// 	//cout<<"Terminating programme..."<<endl<<"Terminated"<<endl;
+		// 	exit(1);
+		// }
 
 		con->setSchema(DATABASE);
 

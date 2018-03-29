@@ -138,6 +138,29 @@ void viewSubmissionOfStudent(Admin admin, MySQLInteract connector)
 	system("gedit src/tmp/submissionFile.c");
 }
 
+void deleteQuestion(Teacher teacher)
+{
+	clearSystem();
+	int quesNo;
+
+	printf("\n\n\tTotal number of questions present : %d", teacher.getNoOfQuestions());
+	printf("\n\tEnter question number : ");
+	cin>>quesNo;
+
+	if(quesNo <=0 || quesNo > teacher.getNoOfQuestions())
+	{
+		printf("\n\tInvalid Question Number\n\tHit Enter to continue");
+		getchar();
+		getchar();
+		return;
+	}
+
+	teacher.deleteQuestion(quesNo);
+	printf("\n\tQuestion has been deleted\n\tHit Enter to continue");
+	getchar();
+	getchar();
+}
+
 void menu(Teacher teacher, Admin admin, MySQLInteract connector)
 {
 	int choice;
@@ -146,7 +169,7 @@ void menu(Teacher teacher, Admin admin, MySQLInteract connector)
 	{
 		clearSystem();
 		printf("\n\n\t1. Upload Question\n\t2. Get Report\n\t3. View Submissions of a student");
-		printf("\n\tx. Exit\n\n\tEnter your choice : ");
+		printf("\n\t4. Delete Question\n\tx. Logout\n\n\tEnter your choice : ");
 		cin>>choice;
 
 		switch(choice)
@@ -160,8 +183,11 @@ void menu(Teacher teacher, Admin admin, MySQLInteract connector)
 			case 3:
 				viewSubmissionOfStudent(admin, connector);
 				break;
+			case 4:
+				deleteQuestion(teacher);
+				break;
 		}
-	}while(choice >=1 && choice <=3);
+	}while(choice >=1 && choice <=4);
 }
 
 void TEACHER(MySQLInteract connector, Teacher teacher)

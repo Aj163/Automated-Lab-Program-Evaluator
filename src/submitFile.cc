@@ -50,7 +50,7 @@ void handler(int sig){
 int executeCode(const char runCommand[])
 {
 	pid = fork();
-	int ret=0;
+	int ret=-1;
 	if(pid==0)
 	{
 		ret = system(runCommand);
@@ -67,7 +67,7 @@ int executeCode(const char runCommand[])
 			return 2;
 		}
 		else{
-			if(ret == -1)
+			if(ret != 0)
 				return 3;
 			return 0;
 		}
@@ -84,10 +84,11 @@ int makeTestCaseFolder(string testInput, string testOutput)
 	inputFile.close();
 	outputFile.close();
 
+
 	system("mkdir testCases");
 	ifstream inputTestCases("inputFile.txt"), outputTestCases("outputFile.txt");
 	string readLine;
-	char filename[20];
+	char filename[100];
 	int numberOfTestCases;
 
 	inputTestCases>>numberOfTestCases;
@@ -166,8 +167,12 @@ void submit(Teacher teacher, Student student)
 
 	if(system(compile))
 	{
-		printf("\n== Compilation Error ==\n");
+		printf("\n\n\tCompilation Error\n");
+		printf("\tHit Enter to continue");
+		getchar();
+		getchar();
 		system("rm -r testCases");
+
 		return;
 	}
 
@@ -255,6 +260,11 @@ void submit(Teacher teacher, Student student)
 	}
 	student.storeFileWithResult(quesNo, user_filepath, "C", resultString, score);
 
+	// Files to be deleted
+	system("rm exec.out");
+	system("rm output.txt");
+	system("rm -r testCases");
+
 	printf("\n\nQuestion Number : %d\n", quesNo);
 	cout<<"Result : "<<resultString<<endl;
 	printf("Score : %d / 100\n", score);
@@ -262,8 +272,5 @@ void submit(Teacher teacher, Student student)
 	getchar();
 	getchar();
 
-	// Files to be deleted
-	system("rm exec.out");
-	system("rm output.txt");
-	system("rm -r testCases");
+	
 }

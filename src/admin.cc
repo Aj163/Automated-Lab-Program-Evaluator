@@ -81,43 +81,37 @@ void ADMIN(MySQLInteract connector)
 		
 	do{
 		clearSystem();
-		printf("\n\t1. Add Teacher\n\t2. Add Student\n\t3. Remove Teacher\n\t4. Remove Student\n\tx. Exit\n\tEnter your choice : ");
+		printf("\n\t1. Add Teacher\n\t2. Add Student\n\t3. Remove Teacher\n\t4. Remove Student\n\tx. Logout\n\tEnter your choice : ");
 		cin>>choice;
-		switch(choice){
-			case 1:
-				printf("\n\tNew Username : ");
-				cin>>username;
-				printf("\n\tNew Password : ");
-				cin>>password;
-				addTeacher(username,password,admin, connector);
-				break;
-
-			case 2:
-				printf("\n\tNew Username : ");
-				cin>>username;
-				printf("\n\tNew Password : ");
-				cin>>password;
-				addStudent(username,password,admin, connector);
-				break;
-
-			case 3:
-				printf("\n\tUsername : ");
-				cin>>username;
-				removeTeacher(username,admin);
-				break;
-
-
-			case 4:
-				printf("\n\tUsername : ");
-				cin>>username;
-				removeStudent(username,admin);
-				break;
-
-			default:
-				printf("\n\tProgramme Terminated\n");
-				exit(0);
-				break;
+		
+		if(choice == 1)
+		{
+			printf("\n\tNew Username : ");
+			cin>>username;
+			printf("\n\tNew Password : ");
+			cin>>password;
+			addTeacher(username,password,admin, connector);
+		}
+		else if(choice == 2)
+		{
+			printf("\n\tNew Username : ");
+			cin>>username;
+			printf("\n\tNew Password : ");
+			cin>>password;
+			addStudent(username,password,admin, connector);
+		}
+		else if(choice == 3)
+		{
+			printf("\n\tUsername : ");
+			cin>>username;
+			removeTeacher(username,admin);
+		}
+		else if(choice == 4)
+		{
+			printf("\n\tUsername : ");
+			cin>>username;
+			removeStudent(username,admin);
 		}
 
-	}while(true);	
+	}while(choice>=1 && choice<=4);	
 }
